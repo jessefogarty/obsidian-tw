@@ -24,7 +24,7 @@ export class EgoRockSettingsTab extends PluginSettingTab {
 
 		new Setting(containerEl)
 			.setName('Taskwarrior binary path')
-			.setDesc('The path to the taskwarrior binary. If task is on the system PATH, "task" should work. Otherwise, provide an absolute path. WSL systems can invoke taskwarrior running in WSL from windows with the path "wsl task".')
+			.setDesc('The path to the taskwarrior binary. If task is on the system PATH, "task" should work. Otherwise, provide an absolute path. WSL systems can invoke taskwarrior running in WSL from windows with the path "task".')
 			.addText((text) =>
 				text
 					.setPlaceholder("task")
@@ -112,7 +112,7 @@ export default class EgoRock extends Plugin {
 		return [indices, rows]
 	}
 
-	doCommandReturnString(commandString: string, el: any, taskwarriorBin='wsl task') {
+	doCommandReturnString(commandString: string, el: any, taskwarriorBin='task') {
 		commandString = commandString.replace(/^task /, '')
 		const reports = this.getReportNames()
 		const report = commandString.split(' ').slice(-1)[0]
@@ -131,7 +131,7 @@ export default class EgoRock extends Plugin {
 		}
 	}
 
-	doCommand(commandString: string, taskwarriorBin='wsl task') {
+	doCommand(commandString: string, taskwarriorBin='task') {
 		const reports = this.getReportNames()
 		const report = commandString.split(' ')[0]
 		if (reports.includes(report)) {
@@ -171,7 +171,7 @@ export default class EgoRock extends Plugin {
 	}
 
 	getReports() {
-		const lines = execSync('wsl task show report').toString().split('\n').filter(line => line.match(/^report\..+/))
+		const lines = execSync('task show report').toString().split('\n').filter(line => line.match(/^report\..+/))
 		return lines
 	}
 
